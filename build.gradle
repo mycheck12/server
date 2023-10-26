@@ -30,15 +30,36 @@ repositories {
 }
 
 dependencies {
-//    implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
+    implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
     implementation 'org.springframework.boot:spring-boot-starter-web'
+    implementation 'org.springframework.boot:spring-boot-starter-validation'
     compileOnly 'org.projectlombok:lombok'
     developmentOnly 'org.springframework.boot:spring-boot-devtools'
-//    runtimeOnly 'com.mysql:mysql-connector-j'
+    runtimeOnly 'com.mysql:mysql-connector-j'
     annotationProcessor 'org.projectlombok:lombok'
     testImplementation 'org.springframework.boot:spring-boot-starter-test'
+    implementation 'org.springframework.boot:spring-boot-starter-websocket'
+    implementation 'org.json:json:20230227'
+
 }
 
 tasks.named('test') {
     useJUnitPlatform()
+}
+
+// 서브모듈 초기화
+task initSubmodule(type: Exec) {
+    commandLine 'git', 'submodule', 'update', '--init', '--recursive'
+}
+
+// 서브모듈 설정 복사
+task copySubmoduleConfig(type: Copy, dependsOn: initSubmodule) {
+    from './secrets'
+    include '*.yml'
+    into 'src/main/resources'
+}
+
+// 빌드 시 실행될 태스크
+task buildWithSubmodule(type: GradleBuild, dependsOn: [initSubmodule, copySubmoduleConfig]) {
+    tasks = ['clean', 'build']
 }
