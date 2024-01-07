@@ -1,5 +1,6 @@
 package com.micheck12.back.product.controller;
 
+import com.micheck12.back.member.entity.Member;
 import com.micheck12.back.product.dto.ProductDto;
 import com.micheck12.back.product.dto.ProductResponseDto;
 import com.micheck12.back.product.service.ProductService;
@@ -33,6 +34,15 @@ public class ProductController {
 
         ProductResponseDto response = productService.updateProduct(id, productDto);
         return ResponseEntity.ok(response);
+    }
+
+    @PostMapping("/{id}/likes")
+    public ResponseEntity<String> likeProduct(@PathVariable Long id) {
+        // TODO: 로그인 중인 유저 얻어오기
+        Member member = new Member(1L);
+
+        String result = productService.likeProduct(id, member);
+        return ResponseEntity.ok(result);
     }
 
 }

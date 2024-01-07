@@ -1,10 +1,13 @@
 package com.micheck12.back.product.service.impl;
 
+import com.micheck12.back.member.entity.Member;
 import com.micheck12.back.product.dto.ProductDto;
 import com.micheck12.back.product.dto.ProductResponseDto;
 import com.micheck12.back.product.entity.Image;
+import com.micheck12.back.product.entity.Like;
 import com.micheck12.back.product.entity.Product;
 import com.micheck12.back.product.mapper.ProductMapper;
+import com.micheck12.back.product.repository.LikeRepository;
 import com.micheck12.back.product.repository.ProductRepository;
 import com.micheck12.back.product.service.ProductService;
 
@@ -17,6 +20,7 @@ import org.springframework.web.multipart.MultipartFile;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 @Slf4j
 @RequiredArgsConstructor
@@ -24,6 +28,7 @@ import java.util.List;
 public class ProductServiceImpl implements ProductService {
 
     private final ProductRepository productRepository;
+    private final LikeRepository likeRepository;
     private final S3UploadService s3UploadService;
     private final ProductMapper mapper;
 
@@ -81,6 +86,21 @@ public class ProductServiceImpl implements ProductService {
         for (Image image : imagesToDelete) {
             s3UploadService.deleteImages(image.getOriginName());
             product.removeImage(image);
+        }
+    }
+
+    @Override
+    public String likeProduct(Long id, Member member) {
+        Optional<Like> like = likeRepository.findByProductAndMember(id, member.getId());
+
+        if (like.isPresent()) {
+            likeRepository.delete(like.get());
+            return "unlike";
+        } else {
+            Product product = productRepository.findById(id)
+                    .orElseThrow(RuntimeException::new);
+            likeRepository.save(new Like(member, product));
+            return "like";
         }
     }
 
