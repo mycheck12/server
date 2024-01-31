@@ -25,7 +25,7 @@ public class Chat extends BaseTimeEntity {
   private Long chatId;
 
   @OneToMany(mappedBy = "chat")
-  private List<UserChat> users = new ArrayList<>();
+  private List<UserChat> userChats = new ArrayList<>();
 
   @Builder
   public Chat() {}

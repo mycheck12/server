@@ -49,7 +49,7 @@ public class User extends BaseTimeEntity {
    */
 
   @OneToMany(mappedBy = "user")
-  private List<UserChat> chats = new ArrayList<>();
+  private List<UserChat> userChats = new ArrayList<>();
 
   // 사용자의 권한
   @Column(name = "roles", nullable = false, length = 30)
