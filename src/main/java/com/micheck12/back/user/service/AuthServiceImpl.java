@@ -1,12 +1,12 @@
-package com.micheck12.back.chat.service;
+package com.micheck12.back.user.service;
 
-import com.micheck12.back.chat.config.JWT.JwtTokenProvider;
-import com.micheck12.back.chat.dto.LoginRequestDTO;
-import com.micheck12.back.chat.dto.ResponseDTO;
-import com.micheck12.back.chat.dto.TokenDTO;
-import com.micheck12.back.chat.dto.UserRegisterRequestDTO;
-import com.micheck12.back.chat.entity.User;
-import com.micheck12.back.chat.repository.UserRepository;
+import com.micheck12.back.user.config.JWT.JwtTokenProvider;
+import com.micheck12.back.user.dto.LoginRequestDTO;
+import com.micheck12.back.common.dto.ResponseDTO;
+import com.micheck12.back.user.dto.TokenDTO;
+import com.micheck12.back.user.dto.UserRegisterRequestDTO;
+import com.micheck12.back.user.entity.User;
+import com.micheck12.back.user.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;

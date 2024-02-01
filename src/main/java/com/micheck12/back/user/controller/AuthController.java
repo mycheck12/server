@@ -1,13 +1,12 @@
-package com.micheck12.back.chat.controller;
+package com.micheck12.back.user.controller;
 
-import com.micheck12.back.chat.dto.LoginRequestDTO;
-import com.micheck12.back.chat.dto.ResponseDTO;
-import com.micheck12.back.chat.dto.TokenDTO;
-import com.micheck12.back.chat.dto.UserRegisterRequestDTO;
-import com.micheck12.back.chat.service.AuthService;
+import com.micheck12.back.user.dto.LoginRequestDTO;
+import com.micheck12.back.common.dto.ResponseDTO;
+import com.micheck12.back.user.dto.TokenDTO;
+import com.micheck12.back.user.dto.UserRegisterRequestDTO;
+import com.micheck12.back.user.service.AuthService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.apache.coyote.Response;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -50,4 +49,8 @@ public class AuthController {
 
     return ResponseEntity.status(HttpStatus.OK).body(true);
   }
+
+  /*
+  TODO: 아이디 중복 체크
+   */
 }

@@ -1,6 +1,7 @@
 package com.micheck12.back.chat.entity;
 
 import com.micheck12.back.common.entity.BaseTimeEntity;
+import com.micheck12.back.user.entity.UserChat;
 import lombok.*;
 import org.hibernate.annotations.DynamicUpdate;
 import org.hibernate.annotations.SQLDelete;

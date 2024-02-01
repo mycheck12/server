@@ -1,9 +1,9 @@
-package com.micheck12.back.chat.config;
+package com.micheck12.back.user.config;
 
-import com.micheck12.back.chat.config.JWT.JwtAccessDeniedHandler;
-import com.micheck12.back.chat.config.JWT.JwtAuthenticationEntryPoint;
-import com.micheck12.back.chat.config.JWT.JwtAuthenticationFilter;
-import com.micheck12.back.chat.config.JWT.JwtTokenProvider;
+import com.micheck12.back.user.config.JWT.JwtAccessDeniedHandler;
+import com.micheck12.back.user.config.JWT.JwtAuthenticationEntryPoint;
+import com.micheck12.back.user.config.JWT.JwtAuthenticationFilter;
+import com.micheck12.back.user.config.JWT.JwtTokenProvider;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;

@@ -1,4 +1,4 @@
-package com.micheck12.back.chat.config.JWT;
+package com.micheck12.back.user.config.JWT;
 
 import org.springframework.security.core.AuthenticationException;
 import org.springframework.security.web.AuthenticationEntryPoint;

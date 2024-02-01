@@ -1,5 +1,6 @@
-package com.micheck12.back.chat.entity;
+package com.micheck12.back.user.entity;
 
+import com.micheck12.back.chat.entity.Chat;
 import lombok.Getter;
 
 import javax.persistence.*;

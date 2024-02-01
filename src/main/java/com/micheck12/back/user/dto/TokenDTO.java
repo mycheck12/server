@@ -1,4 +1,4 @@
-package com.micheck12.back.chat.dto;
+package com.micheck12.back.user.dto;
 
 import lombok.*;
 

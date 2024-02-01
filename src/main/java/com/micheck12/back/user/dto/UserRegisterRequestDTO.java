@@ -1,4 +1,4 @@
-package com.micheck12.back.chat.dto;
+package com.micheck12.back.user.dto;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -12,8 +12,11 @@ TODO: 검증 단계 필요
 @AllArgsConstructor
 @Builder
 @Getter
-public class LoginRequestDTO {
+public class UserRegisterRequestDTO {
 
   private String username;
   private String password;
+  private String name;
+  private String nickname;
+  private String email;
 }

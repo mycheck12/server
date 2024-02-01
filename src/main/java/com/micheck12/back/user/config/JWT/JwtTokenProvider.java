@@ -1,8 +1,8 @@
-package com.micheck12.back.chat.config.JWT;
+package com.micheck12.back.user.config.JWT;
 
-import com.micheck12.back.chat.auth.PrincipalDetails;
-import com.micheck12.back.chat.dto.TokenDTO;
-import com.micheck12.back.chat.entity.User;
+import com.micheck12.back.user.auth.PrincipalDetails;
+import com.micheck12.back.user.dto.TokenDTO;
+import com.micheck12.back.user.entity.User;
 import com.micheck12.back.chat.exception.CustomException;
 import com.micheck12.back.chat.util.error.ErrorCode;
 import io.jsonwebtoken.Claims;

@@ -1,6 +1,6 @@
-package com.micheck12.back.chat.repository;
+package com.micheck12.back.user.repository;
 
-import com.micheck12.back.chat.entity.User;
+import com.micheck12.back.user.entity.User;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 import java.util.Optional;

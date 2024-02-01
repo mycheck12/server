@@ -1,6 +1,6 @@
-package com.micheck12.back.chat.auth;
+package com.micheck12.back.user.auth;
 
-import com.micheck12.back.chat.entity.User;
+import com.micheck12.back.user.entity.User;
 import lombok.Data;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
