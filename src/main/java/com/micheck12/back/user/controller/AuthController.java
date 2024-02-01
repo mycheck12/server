@@ -16,6 +16,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import javax.servlet.http.HttpServletResponse;
+import javax.validation.Valid;
 
 @RequiredArgsConstructor
 @RestController
@@ -35,13 +36,13 @@ public class AuthController {
   private String PREFIX;
 
   @PostMapping("/register")
-  public ResponseEntity<ResponseDTO<Long>> register(@RequestBody UserRegisterRequestDTO request) {
+  public ResponseEntity<ResponseDTO<Long>> register(@RequestBody @Valid UserRegisterRequestDTO request) {
     ResponseDTO<Long> response = authService.register(request);
     return ResponseEntity.status(HttpStatus.OK).body(response);
   }
 
   @PostMapping("/login")
-  public ResponseEntity<Boolean> login(@RequestBody LoginRequestDTO request, HttpServletResponse response) {
+  public ResponseEntity<Boolean> login(@RequestBody @Valid LoginRequestDTO request, HttpServletResponse response) {
     TokenDTO tokenDTO = authService.login(request);
     response.setHeader(AUTHORIZATION_HEADER, PREFIX + tokenDTO.getAccessToken());
     response.setHeader(REFRESH_HEADER, PREFIX + tokenDTO.getAccessToken());
