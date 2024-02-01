@@ -1,4 +1,4 @@
-package com.micheck12.back.chat.util.error;
+package com.micheck12.back.common.util.error;
 
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;

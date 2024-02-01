@@ -1,9 +1,9 @@
 package com.micheck12.back.user.auth;
 
 import com.micheck12.back.user.entity.User;
-import com.micheck12.back.chat.exception.CustomException;
+import com.micheck12.back.common.exception.CustomException;
 import com.micheck12.back.user.repository.UserRepository;
-import com.micheck12.back.chat.util.error.ErrorCode;
+import com.micheck12.back.common.util.error.ErrorCode;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;

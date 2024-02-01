@@ -1,6 +1,6 @@
-package com.micheck12.back.chat.exception;
+package com.micheck12.back.common.exception;
 
-import com.micheck12.back.chat.util.error.ErrorCode;
+import com.micheck12.back.common.util.error.ErrorCode;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 
