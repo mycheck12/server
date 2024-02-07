@@ -19,6 +19,7 @@ public enum ErrorCode {
   /* code: 404 */
   USER_NOT_FOUND(NOT_FOUND, "유저 정보가 존재하지 않습니다."),
   NOT_EXISTED_CHAT(NOT_FOUND, "존재하지 않는 방입니다."),
+  REFRESH_TOKEN_NOT_FOUND(NOT_FOUND, "리프레시 토큰이 존재하지 않습니다."),
   ;
 
   private final HttpStatus httpStatus;
