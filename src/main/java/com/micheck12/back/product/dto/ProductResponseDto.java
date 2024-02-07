@@ -28,4 +28,6 @@ public class ProductResponseDto {
 
     private String info;
 
+    private int hit;
+
 }

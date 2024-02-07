@@ -44,6 +44,13 @@ public class ProductServiceImpl implements ProductService {
 
     @Override
     @Transactional
+    public void addHit(Long id) {
+        productRepository.increaseHitById(id);
+    }
+
+
+    @Override
+    @Transactional
     public ProductResponseDto saveProduct(ProductDto productDto) {
 
         Product product = mapper.productDtoToProduct(productDto);

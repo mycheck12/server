@@ -8,6 +8,11 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import javax.servlet.http.Cookie;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+import java.util.Arrays;
+
 @RestController
 @RequestMapping("/api/products")
 @RequiredArgsConstructor
@@ -16,10 +21,35 @@ public class ProductController {
     private final ProductService productService;
 
     @GetMapping("/{id}")
-    public ResponseEntity<ProductResponseDto> getProduct(@PathVariable Long id) {
+    public ResponseEntity<ProductResponseDto> getProduct(@PathVariable Long id,
+                                                         HttpServletRequest req,
+                                                         HttpServletResponse res) {
 
+        Cookie cookie = hitValidation(id, req);
         ProductResponseDto response = productService.getProduct(id);
+        if (cookie != null) res.addCookie(cookie);
         return ResponseEntity.ok(response);
+    }
+
+    private Cookie hitValidation(Long id, HttpServletRequest req) {
+        Cookie[] cookies = req.getCookies();
+        if (cookies != null) {
+            for (Cookie cookie : cookies) {
+                String[] productIds = cookie.getValue().split("_");
+                if (!Arrays.asList(productIds).contains(String.valueOf(id))) {
+                    productService.addHit(id);
+                    cookie.setValue(cookie.getValue() + "_" + id);
+                    return cookie;
+                }
+                return null;
+            }
+        }
+
+        productService.addHit(id);
+        Cookie cookie = new Cookie("productIds", String.valueOf(id));
+        cookie.setPath("/");
+        cookie.setMaxAge(24 * 60 * 60);
+        return cookie;
     }
 
     @PostMapping

@@ -26,6 +26,8 @@ public class Product extends BaseTimeEntity {
     @Column(nullable = false)
     private String info;
 
+    private int hit;
+
     @OneToMany(mappedBy = "product", cascade = {CascadeType.PERSIST, CascadeType.MERGE}, orphanRemoval = true, fetch = FetchType.LAZY)
     private List<Image> images = new ArrayList<>();
 
@@ -50,6 +52,7 @@ public class Product extends BaseTimeEntity {
         this.name = name;
         this.price = price;
         this.info = info;
+        this.hit = 0;
     }
 
 }
