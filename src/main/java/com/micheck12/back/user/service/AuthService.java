@@ -9,4 +9,5 @@ public interface AuthService {
 
   ResponseDTO<Long> register(UserRegisterRequestDTO request);
   TokenDTO login(LoginRequestDTO request);
+  String reissueAccessToken(TokenDTO tokenDTO);
 }

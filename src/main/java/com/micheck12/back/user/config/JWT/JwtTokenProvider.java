@@ -2,9 +2,11 @@ package com.micheck12.back.user.config.JWT;
 
 import com.micheck12.back.user.auth.PrincipalDetails;
 import com.micheck12.back.user.dto.TokenDTO;
+import com.micheck12.back.user.entity.RefreshToken;
 import com.micheck12.back.user.entity.User;
 import com.micheck12.back.common.exception.CustomException;
 import com.micheck12.back.common.util.error.ErrorCode;
+import com.micheck12.back.user.repository.RefreshTokenRepository;
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.MalformedJwtException;
@@ -13,6 +15,7 @@ import io.jsonwebtoken.UnsupportedJwtException;
 import io.jsonwebtoken.SignatureAlgorithm;
 import io.jsonwebtoken.security.Keys;
 import io.jsonwebtoken.security.SecurityException;
+import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.InitializingBean;
 import org.springframework.beans.factory.annotation.Value;
@@ -20,14 +23,19 @@ import org.springframework.security.authentication.UsernamePasswordAuthenticatio
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.stereotype.Component;
+import org.springframework.util.StringUtils;
 
+import javax.servlet.http.HttpServletRequest;
 import java.security.Key;
 import java.util.Base64;
 import java.util.Date;
 import java.util.stream.Collectors;
 
+import static com.micheck12.back.common.util.error.ErrorCode.USER_NOT_FOUND;
+
 @Component
 @Slf4j
+@RequiredArgsConstructor
 public class JwtTokenProvider implements InitializingBean {
 
   @Value("${jwt.secret}")
@@ -35,8 +43,10 @@ public class JwtTokenProvider implements InitializingBean {
 
   private static final String AUTHORITIES_KEY = "auth";
   private static final String PREFIX = "Bearer";
-  private static final long ACCESS_TOKEN_EXPIRE_TIME = 1000 * 60 * 60 * 24;
+  private static final long ACCESS_TOKEN_EXPIRE_TIME = 1000 * 20;
   private static final long REFRESH_TOKEN_EXPIRE_TIME = 1000 * 60 * 60 * 24 * 3;
+
+  private final RefreshTokenRepository refreshTokenRepository;
 
   private Key key;
 
@@ -92,6 +102,7 @@ public class JwtTokenProvider implements InitializingBean {
 
   public boolean validateToken(String token) {
     try {
+      log.info(token);
       Jwts.parserBuilder()
               .setSigningKey(key)
               .build()
@@ -111,15 +122,23 @@ public class JwtTokenProvider implements InitializingBean {
     return false;
   }
 
-  private Claims parseClaims(String accessToken) {
+  private Claims parseClaims(String token) {
     try {
       return Jwts.parserBuilder()
               .setSigningKey(key)
               .build()
-              .parseClaimsJws(accessToken)
+              .parseClaimsJws(token)
               .getBody();
     } catch (ExpiredJwtException e) {
       return e.getClaims();
     }
+  }
+
+  public String resolveToken(String bearerToken) {
+    if (StringUtils.hasText(bearerToken) && bearerToken.startsWith(PREFIX)) {
+      return bearerToken.substring(7);
+    }
+
+    return null;
   }
 }

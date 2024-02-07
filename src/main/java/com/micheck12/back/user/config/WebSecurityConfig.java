@@ -45,8 +45,7 @@ public class WebSecurityConfig {
             .and()
             .addFilterBefore(new JwtAuthenticationFilter(jwtTokenProvider), UsernamePasswordAuthenticationFilter.class)
             .authorizeHttpRequests()
-            .requestMatchers(new AntPathRequestMatcher("/api/v1/auth/register")).permitAll()
-            .requestMatchers(new AntPathRequestMatcher("/api/v1/auth/login")).permitAll()
+            .requestMatchers(new AntPathRequestMatcher("/api/v1/auth/**")).permitAll()
             .anyRequest().authenticated();
 
     return httpSecurity.build();

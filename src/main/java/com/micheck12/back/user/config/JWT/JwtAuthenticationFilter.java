@@ -26,8 +26,7 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
 
   @Override
   protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain) throws ServletException, IOException {
-
-    String token = resolveToken(request);
+    String token = jwtTokenProvider.resolveToken(request.getHeader(AUTHORIZATION_HEADER));
 
     if (token != null && jwtTokenProvider.validateToken(token)) {
       Authentication authentication = jwtTokenProvider.getAuthentication(token);
@@ -36,15 +35,5 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
       log.info("set Authentication to security context for '{}', uri: {}", authentication.getName(), request.getRequestURI());
     }
     filterChain.doFilter(request, response);
-  }
-
-  private String resolveToken(HttpServletRequest request) {
-    String bearerToken = request.getHeader(AUTHORIZATION_HEADER);
-
-    if (StringUtils.hasText(bearerToken) && bearerToken.startsWith(PREFIX)) {
-      return bearerToken.substring(7);
-    }
-
-    return null;
   }
 }
