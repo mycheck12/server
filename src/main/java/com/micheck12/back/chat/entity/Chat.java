@@ -1,12 +1,15 @@
 package com.micheck12.back.chat.entity;
 
 import com.micheck12.back.common.entity.BaseTimeEntity;
+import com.micheck12.back.user.entity.UserChat;
 import lombok.*;
 import org.hibernate.annotations.DynamicUpdate;
 import org.hibernate.annotations.SQLDelete;
 import org.hibernate.annotations.Where;
 
 import javax.persistence.*;
+import java.util.ArrayList;
+import java.util.List;
 
 @ToString
 @Getter
@@ -21,6 +24,9 @@ public class Chat extends BaseTimeEntity {
   @GeneratedValue(strategy = GenerationType.IDENTITY)
   @Column(name = "chat_id", nullable = false, unique = true)
   private Long chatId;
+
+  @OneToMany(mappedBy = "chat")
+  private List<UserChat> userChats = new ArrayList<>();
 
   @Builder
   public Chat() {}
