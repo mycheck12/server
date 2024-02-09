@@ -11,7 +11,6 @@ import org.springframework.web.bind.annotation.*;
 import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import java.util.Arrays;
 
 @RestController
 @RequestMapping("/api/products")
@@ -35,18 +34,19 @@ public class ProductController {
         Cookie[] cookies = req.getCookies();
         if (cookies != null) {
             for (Cookie cookie : cookies) {
-                String[] productIds = cookie.getValue().split("_");
-                if (!Arrays.asList(productIds).contains(String.valueOf(id))) {
-                    productService.addHit(id);
-                    cookie.setValue(cookie.getValue() + "_" + id);
-                    return cookie;
+                if (cookie.getName().equals("productIds")) {
+                    if (!cookie.getValue().contains("[" + id + "]")) {
+                        productService.addHit(id);
+                        cookie.setValue(cookie.getValue() + "[" + id + "]");
+                        return cookie;
+                    }
+                    return null;
                 }
-                return null;
             }
         }
 
         productService.addHit(id);
-        Cookie cookie = new Cookie("productIds", String.valueOf(id));
+        Cookie cookie = new Cookie("productIds", "[" + id + "]");
         cookie.setPath("/");
         cookie.setMaxAge(24 * 60 * 60);
         return cookie;
