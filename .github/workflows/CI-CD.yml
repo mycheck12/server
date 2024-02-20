@@ -46,14 +46,23 @@ jobs:
       - name: Build JAR
         run: ./gradlew build -x test
 
+      - name: Docker build
+          run: |
+            docker login -u ${{ secrets.DOCKERHUB_USERNAME }} -p ${{ secrets.DOCKERHUB_PASSWORD }}
+            docker build -t app .
+            docker tag app ${{ secrets.DOCKERHUB_USERNAME }}/mycheck12:latest
+            docker push ${{ secrets.DOCKERHUB_USERNAME }}/mycheck12:latest
+
       - name: Deploy to EC2
         uses: appleboy/ssh-action@master
         with:
           host: ${{ secrets.EC2_SERVER_HOST }}
           username: ${{ secrets.EC2_SERVER_USERNAME }}
           key: ${{ secrets.EC2_SERVER_KEY }}
+          # 도커 작업
           script: |
-            cd /home/${{ secrets.EC2_SERVER_USERNAME }}/mycheck12
-            sudo systemctl stop micheck12.service
-            cp ./build/libs/micheck12.jar /home/${{ secrets.EC2_SERVER_USERNAME }}/mycheck12/micheck12.jar
-            sudo systemctl start micheck12.service
+            docker pull ${{ secrets.DOCKERHUB_USERNAME }}/mycheck12:latest
+            docker stop $(docker ps -a -q)
+            docker run -d --log-driver=syslog -p 8080:8080 ${{ secrets.DOCKERHUB_USERNAME }}/mycheck12:latest
+            docker rm $(docker ps --filter 'status=exited' -a -q)
+            docker image prune -a -f
