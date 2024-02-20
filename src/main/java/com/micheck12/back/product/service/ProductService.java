@@ -9,6 +9,7 @@ public interface ProductService {
     ProductResponseDto getProduct(Long id);
     ProductResponseDto saveProduct(ProductDto productDto);
     ProductResponseDto updateProduct(Long id, ProductDto productDto);
+    void addHit(Long id);
     String likeProduct(Long id, Member member);
 
 }
