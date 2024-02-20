@@ -53,7 +53,7 @@ jobs:
           username: ${{ secrets.EC2_SERVER_USERNAME }}
           key: ${{ secrets.EC2_SERVER_KEY }}
           script: |
-            cd /home/ubuntu/mycheck12
+            cd /home/${{ secrets.EC2_SERVER_USERNAME }}/mycheck12
             sudo systemctl stop micheck12.service
-            cp build/libs/micheck12.jar /home/ubuntu/mycheck12/micheck12.jar
+            cp /build/libs/micheck12.jar /home/${{ secrets.EC2_SERVER_USERNAME }}/mycheck12/micheck12.jar
             sudo systemctl start micheck12.service
