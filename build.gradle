@@ -61,21 +61,13 @@ tasks.named('test') {
     useJUnitPlatform()
 }
 
-// 서브모듈 초기화
-task initSubmodule(type: Exec) {
-    commandLine 'git', 'submodule', 'update', '--init', '--recursive'
-}
-
-// 서브모듈 설정 복사
-task copySubmoduleConfig(type: Copy, dependsOn: initSubmodule) {
-    from './secrets'
-    include '*.yml'
-    into 'src/main/resources'
-}
-
-// 빌드 시 실행될 태스크
-task buildWithSubmodule(type: GradleBuild, dependsOn: [initSubmodule, copySubmoduleConfig]) {
-    tasks = ['clean', 'build']
+// 빌드 시 서브 모듈의 설정을 포함시키기
+task copyPrivate(type: Copy) {
+    copy {
+        from './developers-secret'
+        include "*.yml"
+        into 'src/main/resources'
+    }
 }
 
 jar { enabled = false }
