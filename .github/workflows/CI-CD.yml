@@ -7,13 +7,10 @@ on:
 
 jobs:
   build:
-    name: Build
+    name: Deploy
     runs-on: ubuntu-latest
     permissions: read-all
     steps:
-      - uses: actions/checkout@v2
-        with:
-          fetch-depth: 0  # Shallow clones should be disabled for a better relevancy of analysis
       - name: Checkout
         uses: actions/checkout@v3
         with:
@@ -51,10 +48,6 @@ jobs:
 
       - name: Build JAR
         run: ./gradlew build -x test
-
-      - name: Fetch Secrets
-        run: |
-          echo "${{ secrets.APPLICATION_DEV_YML }}" > application-dev.yml
 
       - name: Docker build
         run: |
