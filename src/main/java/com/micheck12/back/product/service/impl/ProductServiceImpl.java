@@ -1,6 +1,5 @@
 package com.micheck12.back.product.service.impl;
 
-import com.micheck12.back.member.entity.Member;
 import com.micheck12.back.product.dto.ProductDto;
 import com.micheck12.back.product.dto.ProductResponseDto;
 import com.micheck12.back.product.entity.Image;
@@ -11,6 +10,7 @@ import com.micheck12.back.product.repository.LikeRepository;
 import com.micheck12.back.product.repository.ProductRepository;
 import com.micheck12.back.product.service.ProductService;
 
+import com.micheck12.back.user.entity.User;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
@@ -97,8 +97,8 @@ public class ProductServiceImpl implements ProductService {
     }
 
     @Override
-    public String likeProduct(Long id, Member member) {
-        Optional<Like> like = likeRepository.findByProductAndMember(id, member.getId());
+    public String likeProduct(Long id, User user) {
+        Optional<Like> like = likeRepository.findByProductAndMember(id, user.getUserId());
 
         if (like.isPresent()) {
             likeRepository.delete(like.get());
@@ -106,7 +106,7 @@ public class ProductServiceImpl implements ProductService {
         } else {
             Product product = productRepository.findById(id)
                     .orElseThrow(RuntimeException::new);
-            likeRepository.save(new Like(member, product));
+            likeRepository.save(new Like(user, product));
             return "like";
         }
     }

@@ -1,6 +1,6 @@
 package com.micheck12.back.product.entity;
 
-import com.micheck12.back.member.entity.Member;
+import com.micheck12.back.user.entity.User;
 import lombok.AccessLevel;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -18,15 +18,15 @@ public class Like {
     private Long id;
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "member_id")
-    private Member member;
+    @JoinColumn(name = "user_id")
+    private User user;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "product_id")
     private Product product;
 
-    public Like(Member member, Product product) {
-        this.member = member;
+    public Like(User user, Product product) {
+        this.user = user;
         this.product = product;
     }
 

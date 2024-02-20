@@ -1,9 +1,9 @@
 package com.micheck12.back.product.controller;
 
-import com.micheck12.back.member.entity.Member;
 import com.micheck12.back.product.dto.ProductDto;
 import com.micheck12.back.product.dto.ProductResponseDto;
 import com.micheck12.back.product.service.ProductService;
+import com.micheck12.back.user.entity.User;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -69,9 +69,9 @@ public class ProductController {
     @PostMapping("/{id}/likes")
     public ResponseEntity<String> likeProduct(@PathVariable Long id) {
         // TODO: 로그인 중인 유저 얻어오기
-        Member member = new Member(1L);
+        User user = null;
 
-        String result = productService.likeProduct(id, member);
+        String result = productService.likeProduct(id, user);
         return ResponseEntity.ok(result);
     }
 

@@ -1,6 +1,7 @@
 package com.micheck12.back.product.entity;
 
 import com.micheck12.back.common.entity.BaseTimeEntity;
+import com.micheck12.back.user.entity.User;
 import lombok.*;
 
 import javax.persistence.*;
@@ -16,6 +17,10 @@ public class Product extends BaseTimeEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
+
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "user_id")
+    private User user;
 
     @Column(nullable = false)
     private String name;
